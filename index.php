@@ -1,1 +1,1 @@
-Welcome to roalx config dashboard!
+Welcome to royalx config dashboard!
