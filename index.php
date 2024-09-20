@@ -1,1 +1,1 @@
-Welcome to royalx config dashboard!
+<h1>Royal Config Dashbaord</h1>
