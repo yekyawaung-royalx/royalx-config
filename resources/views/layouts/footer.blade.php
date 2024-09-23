@@ -10,7 +10,7 @@
       <a href="#" class="footer-link me-4">DB Connection: <strong class="badge bg-secondary"> {{ env('DB_CONNECTION') }}</strong></a>
       
       
-      <a href="#" class="footer-link d-none d-sm-inline-block">Support</a>
+      <a href="#" class="footer-link d-none d-sm-inline-block">Host: <strong class="badge bg-secondary">{{ env('DB_HOST') }}</strong></a>
       
     </div>
   </div>
