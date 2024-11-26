@@ -66,7 +66,7 @@
                                                         </div>
                                                 </div>
             <div class="row">
-                  <div class="col-lg-5">
+                  <div class="col-lg-4">
 <div class="card h-100">
       <div class="card-header d-flex align-items-center justify-content-between pb-0">
         <div class="card-title mb-2">
@@ -141,7 +141,7 @@
       </div>
     </div>
                   </div>
-                  <div class="col-lg-7">
+                  <div class="col-lg-8">
 <div class="card">
   <h5 class="card-header">Related Routes</h5>
   <div class="card-body">
