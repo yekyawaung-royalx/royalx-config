@@ -748,6 +748,8 @@ $('body').delegate(".btn-search","click",function () {
                         type: 'GET',
                         data: {},
                         success: function(data){
+                            $(".loading").addClass('hide');
+                            $(".results").removeClass('hide');
                              if(data.total > 0){
                                                 $.each(data.data, function (i, item) {
                                                     $("#fetched-data").append('<tr>'
@@ -796,11 +798,12 @@ $('body').delegate(".btn-search","click",function () {
 
                                                 $(".loading").addClass('hide');
                                                 $(".results").removeClass('hide');
+                                                 $(".empty-data").addClass('hide');
                                         }else{
                                                 $(".empty-data").removeClass('hide');
                                         }
 
-                                        $('#searchRoute').modal('hide');
+                            $('#searchRoute').modal('hide');
                         }
                 });
             });
