@@ -302,7 +302,7 @@
                                     <div class="col-md-12">
                                         <div class="form-check form-check-primary">
                                             <input class="form-check-input" type="checkbox" value="1" id="check-all-branches">
-                                            <label class="form-check-label fw-semibold" for="check-all-branches" cursorshover="true">All Selected Branches (<span id="from-label"></span> မှစာထွက်လမ်းကြောင်းများ)</label>
+                                            <label class="form-check-label fw-semibold" for="check-all-branches" cursorshover="true">All Selected Branches (<span class="text-danger" id="from-label"></span> မှစာထွက်လမ်းကြောင်းများ)</label>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -674,6 +674,14 @@
                $("#new-postal-code").val(region+township);
             });
 
+
+
+
+        $('body').delegate("#new-from-branch","change",function () {
+                lbl = $("#new-from-branch :selected").text();
+                $("#from-label").text(lbl);
+        });
+
              $('body').delegate(".btn-create","click",function () {
                 items=[];
                  types=[];
@@ -748,8 +756,6 @@ $('body').delegate(".btn-search","click",function () {
                         type: 'GET',
                         data: {},
                         success: function(data){
-                            $(".loading").addClass('hide');
-                            $(".results").removeClass('hide');
                              if(data.total > 0){
                                                 $.each(data.data, function (i, item) {
                                                     $("#fetched-data").append('<tr>'
@@ -798,12 +804,11 @@ $('body').delegate(".btn-search","click",function () {
 
                                                 $(".loading").addClass('hide');
                                                 $(".results").removeClass('hide');
-                                                 $(".empty-data").addClass('hide');
                                         }else{
                                                 $(".empty-data").removeClass('hide');
                                         }
 
-                            $('#searchRoute').modal('hide');
+                                        $('#searchRoute').modal('hide');
                         }
                 });
             });
