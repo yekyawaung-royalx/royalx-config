@@ -122,6 +122,16 @@
           </li>
           <li class="list-unstyled">
              <hr class="m-0">
+            </li><li class="d-flex my-3 pb-1">
+            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+              <div class="me-2">
+                <small>Delivery Type</small>
+                <h6 class="mb-0"><span class="badge rounded-pill {{ $route->DeliveryType=='same-day'? 'bg-info':'bg-primary' }}">{{ $route->DeliveryType }}</span>&nbsp;</h6>
+              </div>
+            </div>
+          </li>
+          <li class="list-unstyled">
+             <hr class="m-0">
             </li>
           <li class="d-flex my-3 pb-1">
             <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">

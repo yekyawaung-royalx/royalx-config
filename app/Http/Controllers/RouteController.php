@@ -88,7 +88,7 @@ class RouteController extends Controller
     public function show($id)
     {
         $route = DB::table('Routes as r')->leftjoin('Branches as b','b.Id','=','r.FromBranchId')
-            ->select('b.Id','b.BranchNameEn','b.BranchNameMm','b.Type','b.RegionCode','b.RegionPostalCode','r.FromBranchId','r.ToBranchLabel','r.Active','r.FromBranchLabel','r.OperationRegion','r.RelatedRegion')
+            ->select('b.Id','b.BranchNameEn','b.BranchNameMm','b.Type','b.RegionCode','b.RegionPostalCode','r.FromBranchId','r.ToBranchLabel','r.Active','r.FromBranchLabel','r.OperationRegion','r.RelatedRegion','r.DeliveryType')
             ->where('r.Id',$id)
             ->first();
         $related_routes = DB::table('Routes')->where('FromBranchId',$route->FromBranchId)->get();
