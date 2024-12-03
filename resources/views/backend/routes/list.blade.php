@@ -805,7 +805,11 @@ $('body').delegate(".btn-search","click",function () {
                                                 $(".loading").addClass('hide');
                                                 $(".results").removeClass('hide');
                                         }else{
+                                                $(".loading").addClass('hide');
+                                                $(".results").removeClass('hide');
                                                 $(".empty-data").removeClass('hide');
+                                                $("#prev-btn").attr('disabled',true);
+                                                $("#next-btn").attr('disabled',true);
                                         }
 
                                         $('#searchRoute').modal('hide');
