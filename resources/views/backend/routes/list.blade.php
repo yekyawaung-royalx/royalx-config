@@ -804,6 +804,7 @@ $('body').delegate(".btn-search","click",function () {
 
                                                 $(".loading").addClass('hide');
                                                 $(".results").removeClass('hide');
+                                                $(".empty-data").addClass('hide');
                                         }else{
                                                 $(".loading").addClass('hide');
                                                 $(".results").removeClass('hide');
