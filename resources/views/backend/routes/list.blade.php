@@ -808,7 +808,7 @@ $('body').delegate(".btn-search","click",function () {
                                         }else{
                                                 $(".loading").addClass('hide');
                                                 $(".results").removeClass('hide');
-                                                $(".empty-data").removeClass('hide');
+                                                $(".empty-data").addClass('hide');
                                                 $("#prev-btn").attr('disabled',true);
                                                 $("#next-btn").attr('disabled',true);
                                         }
