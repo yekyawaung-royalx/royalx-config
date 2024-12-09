@@ -252,6 +252,7 @@
                     type: 'GET',
                     data: {},
                     success: function(data){
+                         $("#fetched-data").empty();
                         if(data.total > 0){
                             $.each(data.data, function (i, item) {
                                 $("#fetched-data").append('<tr>'
@@ -327,6 +328,7 @@
                     type: 'GET',
                     data: {},
                     success: function(data){
+                         $("#fetched-data").empty();
                         if(data.total > 0){
                             $.each(data.data, function (i, item) {
                                 $.each(data.data, function (i, item) {
