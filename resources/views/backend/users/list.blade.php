@@ -330,7 +330,6 @@
                     success: function(data){
                          $("#fetched-data").empty();
                         if(data.total > 0){
-                            $.each(data.data, function (i, item) {
                                 $.each(data.data, function (i, item) {
                                 $("#fetched-data").append('<tr>'
                                     +'<td><span class="text-secondary fw-semibold">'+item.EmployeeId+'</span></td>'
@@ -351,7 +350,7 @@
                                     +'</td>'
                                 +'</tr>');
                             });
-                        });
+                        
 
                             $(".data-loading").hide();
                                 
