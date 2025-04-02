@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class ThreePLController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     
     public function service_types(){
         $json = 'json/3pl-services/service-types';
@@ -39,7 +43,7 @@ class ThreePLController extends Controller
     }
 
     public function json_expresses(){
-        $expresses = DB::table('Expresses3PL')->paginate(50);
+        $expresses = DB::table('Expresses3PL')->orderBy('ExpressNameEn','asc')->paginate(50);
 
         return response()->json($expresses);
     }
