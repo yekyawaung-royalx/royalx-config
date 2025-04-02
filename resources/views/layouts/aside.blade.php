@@ -36,12 +36,28 @@
 	        	</li>
 	      	</ul>
     	</li>
-        <li class="menu-item ">
-            <a href="{{ url('admin/api') }}" class="menu-link {{ request()->is('admin/api') ? 'active' : '' }}">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="API">API</div>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-directions"></i>
+                <div data-i18n="3PL Services">3PL Services</div>
             </a>
-            
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ url('admin/3pl-services/service-types') }}" class="menu-link">
+                        <div data-i18n="Service Types">Service Types</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ url('admin/3pl-services/stations') }}" class="menu-link">
+                        <div data-i18n="Stations">Stations</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ url('admin/3pl-services/expresses') }}" class="menu-link">
+                        <div data-i18n="Expresses">Expresses</div>
+                    </a>
+                </li>
+            </ul>
         </li>
 
 	    <!-- Apps & Pages -->

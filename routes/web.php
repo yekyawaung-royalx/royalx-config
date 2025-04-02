@@ -20,33 +20,14 @@ Route::get('/livechat', function () {
     return view('livechat');
 });
 Route::get('/test',function (){
+    $_3pl = [
+            'Stations3PL' => DB::table('Stations3PL')->count(),
+            'ServiceTypes3PL' => DB::table('ServiceTypes3PL')->count(),
+            'Expresses3PL' => DB::table('Expresses3PL')->count(),
+            'ExpressesStations3PL' => DB::table('ExpressesStations3PL')->count()
+        ];
 
-    $count = DB::table('Routes')->select('Id')->count();
-    return $count;
-
-    //$count = DB::table('royal_waybill')->select('name')->first();
-
-    //return $count;
-    //$employees = json_decode(fetched_employee_data_from_innovix(), JSON_PRETTY_PRINT);
-
-    //clear old data
-    //DB::table('InnovixData')->delete();
-
-    //saved updated data into Innovix table
-    // foreach($employees['records'] as $employee){
-    //     DB::table('InnovixData')->insert([
-    //                             'EmployeeId'                   => $employee['employee_id'],
-    //                             'EmployeeName'                     => $employee['name_eng'],
-    //                             'Position'                      =>  $employee['position'],
-    //                             'Department'                  => $employee['department'],
-    //                             'AssignDepartment'               =>   $employee['branch'],
-    //                             'PhoneNo'              =>  $employee['phone_number'],
-    //                             'LastDayOfWork'          =>  $employee['last_day_of_work'],
-    //                             'Checked' => 0,
-    //                             'CreatedAt'                 => date('Y-m-d H:i:s'),
-    //                             'UpdatedAt'                => date('Y-m-d H:i:s'),
-    //                     ]);
-    // }
+    return $_3pl;
 });
 
 Route::get('/widget', function () {
@@ -142,6 +123,10 @@ Route::prefix('admin')->group(function () {
 
     Route::post('set-default-branch',[App\Http\Controllers\UserController::class, 'set_default_branch']);
     Route::post('register-system-user',[App\Http\Controllers\UserController::class, 'register_system_user']);
+
+    Route::get('3pl-services/service-types',[App\Http\Controllers\ThreePLController::class, 'service_types']);
+    Route::get('3pl-services/stations',[App\Http\Controllers\ThreePLController::class, 'stations']);
+    Route::get('3pl-services/expresses',[App\Http\Controllers\ThreePLController::class, 'expresses']);
 });
 
 Route::prefix('json')->group(function () {
@@ -166,6 +151,10 @@ Route::prefix('json')->group(function () {
     Route::get('routes/{status}',[App\Http\Controllers\RouteController::class, 'json_routes']);
     //Route::get('routes/{status}',[App\Http\Controllers\RouteController::class, 'json_routes']);
      
+
+    Route::get('3pl-services/service-types',[App\Http\Controllers\ThreePLController::class, 'json_service_types']);
+    Route::get('3pl-services/stations',[App\Http\Controllers\ThreePLController::class, 'json_stations']);
+    Route::get('3pl-services/expresses',[App\Http\Controllers\ThreePLController::class, 'json_expresses']);
 });
 
 Route::prefix('search')->group(function () {
