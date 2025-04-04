@@ -47,4 +47,32 @@ class ThreePLController extends Controller
 
         return response()->json($expresses);
     }
+
+    public function fetched_express(Request $request){
+        $express = DB::table('Expresses3PL')->where('Id',$request->id)->first();
+
+        return response()->json($express);
+    }
+
+    public function updated_express(Request $request){
+        $response = array();
+
+        $express = DB::table('Expresses3PL')->where('Id',$request->id)->first();
+        if($express){
+            DB::table('Expresses3PL')->where('Id',$request->id)->update([
+                'ExpressNameEn' => $request->en_name,
+                'ExpressNameMm' => $request->mm_name,
+                'Active' => $request->active
+            ]);
+
+            $response['success'] = 1;
+            $response['message'] = 'Express have been updated.';
+        }else{
+            $response['success'] = 0;
+            $response['message'] = 'Express is not exists.';
+        }
+
+        return response()->json($response);
+    }
+    
 }

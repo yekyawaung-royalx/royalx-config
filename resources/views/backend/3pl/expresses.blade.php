@@ -21,6 +21,8 @@
         <link rel="stylesheet" href="{{ asset('backend/css/perfect-scrollbar.css') }}" />
         <link rel="stylesheet" href="{{ asset('backend/css/typeahead.css') }}" /> 
         <link rel="stylesheet" href="{{ asset('backend/css/select2.css') }}" />
+        <link rel="stylesheet" href="{{ asset('backend/css/toastr.css') }}" />
+        <link rel="stylesheet" href="{{ asset('backend/css/animate.css') }}" />
 
         <link rel="stylesheet" href="{{ asset('backend/css/tagify.css') }}" />
         <link rel="stylesheet" href="{{ asset('backend/css/bootstrap-select.css') }}" />
@@ -163,6 +165,77 @@
                         </form>
                 </div>
         </div>
+
+        <div class="bs-toast toast toast-placement-ex toast-top-right fade bg-secondary" id="successToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+            <div class="toast-header">
+                <i class="bx bx-bell me-2"></i>
+                <div class="me-auto fw-medium">Success</div>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" cursorshover="true"></button>
+            </div>
+            <div class="toast-body">
+                <span id="success-message">...</span>
+            </div>
+        </div>
+
+        <div class="bs-toast toast toast-placement-ex toast-top-right fade  bg-danger" id="errorToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+            <div class="toast-header">
+                <i class="bx bx-bell me-2"></i>
+                <div class="me-auto fw-medium">Error</div>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" cursorshover="true"></button>
+            </div>
+            <div class="toast-body">
+                <span id="error-message"></span>
+            </div>
+        </div>
+
+        <!-- Edit Modal -->
+        <div class="modal modal-top fade" id="EditExpress" tabindex="-1">
+            <div class="modal-dialog">
+                <form class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTopTitle">Edit Express</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="edit-mmname" class="form-label">Express EN Name</label>
+                                <input type="text" id="edit-enname" class="form-control" value="loading ..." disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="edit-enname" class="form-label">Express MM Name</label>
+                                <input type="text" id="edit-mmname" class="form-control" value="loading ..." disabled>
+                            </div>
+                        </div>
+                       
+                        <div class="row g-2">
+                            <div class="col mb-3">
+                                <label class="switch switch-primary">
+                                    <input type="checkbox" class="switch-input" id="edit-active" />
+                                    <span class="switch-toggle-slider">
+                                        <span class="switch-on">
+                                            <i class="bx bx-check"></i>
+                                        </span>
+                                        <span class="switch-off">
+                                            <i class="bx bx-x"></i>
+                                        </span>
+                                    </span>
+                                    <span class="switch-label">Active</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="edit-id" class="form-control">
+                        <input type="hidden" id="edit-region-type" class="form-control">
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary btn-update">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>  
  
   
     <!-- Core JS -->
@@ -181,12 +254,13 @@
 
     <!-- Vendors JS -->
     <script src="{{ asset('backend/js/select2.js') }}"></script>
-        <script src="{{ asset('backend/js/tagify.js') }}"></script>
-        <script src="{{ asset('backend/js/bootstrap-select.js') }}"></script>
-        <script src="{{ asset('backend/js/typeahead.js') }}"></script>
-        <script src="{{ asset('backend/js/bloodhound.js') }}"></script>
+    <script src="{{ asset('backend/js/tagify.js') }}"></script>
+    <script src="{{ asset('backend/js/bootstrap-select.js') }}"></script>
+    <script src="{{ asset('backend/js/typeahead.js') }}"></script>
+    <script src="{{ asset('backend/js/bloodhound.js') }}"></script>
     <script src="{{ asset('backend/js/sweetalert2.js') }}"></script>
     <script src="{{ asset('backend/js/extended-ui-sweetalert2.js') }}"></script>
+    <script src="{{ asset('backend/js/ui-toasts.js') }}"></script>
 
     <!-- Main JS -->
     <script src="{{ asset('backend/js/main.js') }}"></script>
@@ -218,9 +292,8 @@
                                                             +'<div class="btn-group">'
                                                                 +'<button type="button" class="btn btn-icon btn-sm btn-outline-secondary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" cursorshover="true"><i class="bx bx-dots-vertical-rounded" cursorshover="true"></i></button>'
                                                                 +'<ul class="dropdown-menu dropdown-menu-end" style="">'
-                                                                    +'<li ><a class="dropdown-item text-success  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#ViewTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-search" cursorshover="true"></span> Quick View</a></li>'
-                                                                    +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
-                                                                    +'<li><a class="dropdown-item text-danger  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#DeleteTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-trash" cursorshover="true"></span> Delete Item</a></li>'
+                                                                    +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditExpress" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
+                                                                    +'<li><a class="dropdown-item text-muted  load-id disabled" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#DeleteExpress" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-trash" cursorshover="true"></span> Delete Item</a></li>'
                                                                 +'</ul>'
                                                              +'</div>'
                                                         +'</td>'
@@ -287,14 +360,13 @@
                                                             +'<div class="btn-group">'
                                                                 +'<button type="button" class="btn btn-icon btn-sm btn-outline-secondary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" cursorshover="true"><i class="bx bx-dots-vertical-rounded" cursorshover="true"></i></button>'
                                                                 +'<ul class="dropdown-menu dropdown-menu-end" style="">'
-                                                                    +'<li ><a class="dropdown-item text-success  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#ViewTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-search" cursorshover="true"></span> Quick View</a></li>'
-                                                                    +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
-                                                                    +'<li><a class="dropdown-item text-danger  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#DeleteTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-trash" cursorshover="true"></span> Delete Item</a></li>'
+                                                                    +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditExpress" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
+                                                                    +'<li><a class="dropdown-item text-muted  load-id disabled" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#DeleteExpress" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-trash" cursorshover="true"></span> Delete Item</a></li>'
                                                                 +'</ul>'
                                                              +'</div>'
                                                         +'</td>'
                                                 +'</tr>');
-                                        });
+                                                });
 
                                         $(".data-loading").hide();
                                         
@@ -328,41 +400,76 @@
                         });
                 });
                 
-                $("#new-township-code").keyup(function(){
-                    reg_code = $("#edit-region :selected").val();
-                         township = $("#new-township-code").val();
-                        raw =  $("#new-region :selected").text();
-                          region =  raw.substr(raw.length - 3);
-                         region = region.substring(0, region.length - 1);
 
-                        $("#new-postal-code").val(region+township);
-                        $("#new-region-code").val(reg_code);
+
+                $('body').delegate(".load-id","click",function () {
+                        id = $(this).attr('title');
+                        $("#edit-enname").val('loading...');
+                        $("#edit-mmname").val('loading...');
+                        $("#edit-enname").prop('disabled',true);
+                        $("#edit-mmname").prop('disabled',true);
+
+                        $.ajax({
+                                url: url+'/admin/3pl-services/fetched-express',
+                                type: 'POST',
+                                data: {
+                                        id:id,
+                                        _token:token
+                                },
+                                success: function(data){
+                                        $("#edit-enname").val(data.ExpressNameEn);
+                                        $("#edit-mmname").val(data.ExpressNameMm);
+                                        if(data.Active == 1){
+                                                $("#edit-active").prop('checked', true);
+                                        }else{
+                                                $("#edit-active").prop('checked', false);
+                                        }
+
+                                        $("#item").val(data.Id);
+
+                                        $("#edit-enname").prop('disabled',false);
+                                        $("#edit-mmname").prop('disabled',false);
+                                }
+                        });
                 });
 
-                $('#new-region,#edit-region').on("change",function search(e) {
-                    reg_code = $(this).val();
-                     township = $("#new-township-code").val();
-                        raw =  $("#new-region :selected").text();
-                          region =  raw.substr(raw.length - 3);
-                         region = region.substring(0, region.length - 1);
+                $('body').delegate(".btn-update","click",function () {
+                        var en_name = $("#edit-enname").val();
+                        var mm_name = $("#edit-mmname").val();
+                        var id = $("#item").val();
+                        if($("#edit-active").prop('checked') == true){
+                            active = 1;
+                        }else{ 
+                            active = 0;
+                        }
 
-                        $("#new-postal-code").val(region+township);
-                        $("#new-region-code").val(reg_code);
-                        fetched_related_branches(reg_code);
-                    //callback region onchange
+                        $('#EditExpress').modal('hide');
+
+                        $.ajax({
+                                url: url+'/admin/3pl-services/updated-express',
+                                type: 'POST',
+                                data: {
+                                        id:id,
+                                        en_name:en_name,
+                                        mm_name:mm_name,
+                                        active:active,
+                                        _method:'PUT',
+                                        _token:token
+                                },
+                                success: function(data){
+                                        if(data.success == 1){
+                                                $("#success-message").text(data.message);
+                                                $("#successToast").toast("show");
+
+                                                fetched_data();   
+                                        }else{
+                                                $("#error-message").text(data.message);
+                                                $("#errorToast").toast("show");
+                                        }
+                                }
+                        });
                 });
-
-                 $("#edit-township-code").keyup(function(){
-                        reg_code = $("#edit-region :selected").val();
-                         township = $("#edit-township-code").val();
-                        raw =  $("#edit-region :selected").text();
-                          region =  raw.substr(raw.length - 3);
-                         region = region.substring(0, region.length - 1);
-
-                        $("#edit-postal-code").val(region+township);
-                        $("#edit-region-code").val(reg_code);
-                         fetched_related_branches(reg_code);
-                });
+                 
             
             fetched_data();   
         });

@@ -127,6 +127,9 @@ Route::prefix('admin')->group(function () {
     Route::get('3pl-services/service-types',[App\Http\Controllers\ThreePLController::class, 'service_types']);
     Route::get('3pl-services/stations',[App\Http\Controllers\ThreePLController::class, 'stations']);
     Route::get('3pl-services/expresses',[App\Http\Controllers\ThreePLController::class, 'expresses']);
+
+    Route::post('3pl-services/fetched-express',[App\Http\Controllers\ThreePLController::class, 'fetched_express']);
+    Route::put('3pl-services/updated-express',[App\Http\Controllers\ThreePLController::class, 'updated_express']);
 });
 
 Route::prefix('json')->group(function () {
