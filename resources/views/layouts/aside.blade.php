@@ -18,6 +18,7 @@
 	      	</a>
 	      	
 	    </li>
+        {{-- 
 	    <li class="menu-item">
 	      	<a href="javascript:void(0);" class="menu-link menu-toggle">
 	        	<i class="menu-icon tf-icons bx bx-directions"></i>
@@ -36,25 +37,36 @@
 	        	</li>
 	      	</ul>
     	</li>
-        <li class="menu-item">
+        --}}
+        <li class="menu-item {{ request()->is('admin/3pl-services/*') ? 'open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-directions"></i>
                 <div data-i18n="3PL Services">3PL Services</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
+                <li class="menu-item {{ request()->is('admin/3pl-services/service-types') ? 'active' : '' }}">
                     <a href="{{ url('admin/3pl-services/service-types') }}" class="menu-link">
                         <div data-i18n="Service Types">Service Types</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item {{ request()->is('admin/3pl-services/stations') ? 'active' : '' }}">
                     <a href="{{ url('admin/3pl-services/stations') }}" class="menu-link">
                         <div data-i18n="Stations">Stations</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item {{ request()->is('admin/3pl-services/expresses') ? 'active' : '' }}">
                     <a href="{{ url('admin/3pl-services/expresses') }}" class="menu-link">
                         <div data-i18n="Expresses">Expresses</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->is('admin/3pl-services/routes') ? 'active' : '' }}">
+                    <a href="{{ url('admin/3pl-services/routes') }}" class="menu-link">
+                        <div data-i18n="Routes">Routes</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->is('admin/3pl-services/branches') ? 'active' : '' }}">
+                    <a href="{{ url('admin/3pl-services/branches') }}" class="menu-link">
+                        <div data-i18n="Branches">Branches</div>
                     </a>
                 </li>
             </ul>

@@ -58,7 +58,7 @@ class RouteController extends Controller
                          'ToBranchLabel'  => $to_label->BranchNameEn,
                          'DeliveryType'  => $type,
                         'Active' => 1,
-                         'CreatedAt'         => date('Y-m-d H:i:s'),
+                        'CreatedAt'         => date('Y-m-d H:i:s'),
                         'UpdatedAt'         => date('Y-m-d H:i:s'),
                     ]);
                 
