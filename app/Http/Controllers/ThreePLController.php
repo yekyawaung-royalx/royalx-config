@@ -36,6 +36,12 @@ class ThreePLController extends Controller
         return view('backend.3pl.branches',compact('json'));
     }
 
+    public function related_branches(){
+        $json = 'json/3pl-services/related-branches';
+
+        return view('backend.3pl.related-branches',compact('json'));
+    }
+
     public function routes(){
         $json = 'json/3pl-services/routes';
         $branches = DB::table('Branches3PL')->orderBy('BranchNameEn','asc')->get();
@@ -49,7 +55,14 @@ class ThreePLController extends Controller
 
     public function view_route($id){
         $route = DB::table('ExpressesStations3PL')->where('Id',$id)->first();
-        $related_routes = DB::table('ExpressesStations3PL')->where('Id',$id)->get();
+
+        if($route){
+            $related_routes = DB::table('ExpressesStations3PL')->where('FromBranchName',$route->FromBranchName)
+                    ->where('ToBranchName',$route->ToBranchName)->orderBy('Default','desc')->get();
+                }else{
+                    $related_routes = array();
+                }
+        
 
         return view('backend.3pl.view-route',compact('route','related_routes'));
     }
@@ -74,6 +87,12 @@ class ThreePLController extends Controller
 
     public function json_branches(){
         $branches = DB::table('Branches3PL')->orderBy('BranchNameEn','asc')->paginate(50);
+
+        return response()->json($branches);
+    }
+
+    public function json_related_branches(){
+        $branches = DB::table('RelatedBranches3PL')->orderBy('BranchNameEn','asc')->paginate(50);
 
         return response()->json($branches);
     }
@@ -112,20 +131,20 @@ class ThreePLController extends Controller
     }
 
     public function saved_route(Request $request){
+        $express = explode(",",$request->express);
+        $station = explode(",",$request->station);
+
         $route = DB::table('ExpressesStations3PL')->where('FromBranchName',$request->from_branch)
-                    ->where('ToBranchName',$request->from_branch)->first();
+                    ->where('ToBranchName',$request->to_branch)->where('ExpressNameEn',$express[0])->first();
 
         if(!$route){
-            $express = explode(",",$request->express);
-            $station = explode(",",$request->station);
-
             DB::table('ExpressesStations3PL')->insert([
                 'FromBranchName' => $request->from_branch,
                 'ToBranchName' => $request->to_branch,
                 'ExpressNameMm' => $express[1],
                 'ExpressNameEn' => $express[0],
-                'StationNameEn' => $station[1],
-                'StationNameMm' => $station[0],
+                'StationNameMm' => $station[1],
+                'StationNameEn' => $station[0],
                 'StationRegionCode' => $request->region,
                 'ServiceType' => $request->type,
                 'Default' => $request->default_route,
@@ -144,5 +163,59 @@ class ThreePLController extends Controller
 
         return response()->json($response);
     }
+
+    
+    public function change_route(Request $request){
+        $route = DB::table('ExpressesStations3PL')->where('Id',$request->Id)->first();
+
+        if($route){
+            DB::table('ExpressesStations3PL')->where('Id',$request->Id)->update([
+                'Active' => $request->active,
+                'UpdatedAt'         => date('Y-m-d H:i:s'),
+            ]);
+
+            $response['success'] = 1;
+            if($request->active == 1){
+                $response['message'] = 'Route has been opened.';
+            }else{
+                $response['message'] = 'Route has been closed.';
+            }
+            
+        }else{
+
+            $response['success'] = 0;
+            $response['message'] = 'Route is not exists.';
+        }
+
+        return response()->json($response);
+    }
+
+    public function set_default(Request $request){
+        $route = DB::table('ExpressesStations3PL')->where('Id',$request->Id)->first();
+
+        if($route){
+            DB::table('ExpressesStations3PL')->where('FromBranchName',$request->from_branch)->where('ToBranchName',$request->to_branch)->update([
+                'Default' => 0,
+                'UpdatedAt'         => date('Y-m-d H:i:s'),
+            ]);
+
+            DB::table('ExpressesStations3PL')->where('Id',$request->Id)->update([
+                'Default' => 1,
+                'UpdatedAt'         => date('Y-m-d H:i:s'),
+            ]);
+
+            $response['success'] = 1;
+            $response['message'] = 'Route has been set default.';
+            
+        }else{
+
+            $response['success'] = 0;
+            $response['message'] = 'Route is not exists.';
+        }
+
+        return response()->json($response);
+    }
+
+    
     
 }
