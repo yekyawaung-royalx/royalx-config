@@ -130,7 +130,10 @@ Route::prefix('admin')->group(function () {
     Route::get('3pl-services/branches',[App\Http\Controllers\ThreePLController::class, 'branches']);
     Route::get('3pl-services/routes',[App\Http\Controllers\ThreePLController::class, 'routes']);
     Route::get('3pl-services/routes/{id}',[App\Http\Controllers\ThreePLController::class, 'view_route']);
-
+    Route::get('3pl-services/related-branches',[App\Http\Controllers\ThreePLController::class, 'related_branches']);
+    Route::post('3pl-services/route/change',[App\Http\Controllers\ThreePLController::class, 'change_route']);
+    Route::post('3pl-services/route/set-default',[App\Http\Controllers\ThreePLController::class, 'set_default']);
+    
     Route::post('3pl-services/fetched-express',[App\Http\Controllers\ThreePLController::class, 'fetched_express']);
     Route::put('3pl-services/updated-express',[App\Http\Controllers\ThreePLController::class, 'updated_express']);
     Route::post('3pl-services/saved-route',[App\Http\Controllers\ThreePLController::class, 'saved_route']);
@@ -164,6 +167,7 @@ Route::prefix('json')->group(function () {
     Route::get('3pl-services/expresses',[App\Http\Controllers\ThreePLController::class, 'json_expresses']);
     Route::get('3pl-services/branches',[App\Http\Controllers\ThreePLController::class, 'json_branches']);
     Route::get('3pl-services/routes',[App\Http\Controllers\ThreePLController::class, 'json_routes']);
+    Route::get('3pl-services/related-branches',[App\Http\Controllers\ThreePLController::class, 'json_related_branches']);
 });
 
 Route::prefix('search')->group(function () {
