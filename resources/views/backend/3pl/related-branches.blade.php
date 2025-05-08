@@ -108,6 +108,8 @@
                                                                                 <tr>
                                                                                         <th class="text-muted unset">Branch Name EN</th>
                                                                                         <th class="text-muted unset">Branch Name MM</th>
+                                                                                        <th class="text-muted unset">Related Name EN</th>
+                                                                                        <th class="text-muted unset">Related Name MM</th>
                                                                                         <th class="text-muted unset">Active</th>
                                                                                         <th class="text-muted unset">Action</th>
                                                                                 </tr>
@@ -286,7 +288,9 @@
                                                 $.each(data.data, function (i, item) {
                                                         $("#fetched-data").append('<tr>'
                                                          +'<td><span class="fw-semibold '+(item.Active == 1? "text-secondary":"text-danger" )+'">'+item.BranchNameEn+'</span></td>'
-                                                        +'<td><span class="text-secondary">'+item.BranchNameMm+'</span></td>'                                                        
+                                                        +'<td><span class="text-secondary">'+item.BranchNameMm+'</span></td>'        
+                                                        +'<td><span class="text-secondary">'+item.RelatedBranchNameMm+'</span></td>'   
+                                                        +'<td><span class="text-secondary">'+item.RelatedBranchNameEn+'</span></td>'                                                   
                                                        +'<td>'+(item.Active == 1? '<span class="badge badge-center rounded-pill bg-success"><i class="bx bx-check"></i></span>':'<span class="badge badge-center rounded-pill bg-danger"><i class="bx bx-x"></i></span>')+'</td>'
                                                         +'<td>'
                                                             +'<div class="btn-group">'

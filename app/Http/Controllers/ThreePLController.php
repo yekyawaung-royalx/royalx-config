@@ -20,8 +20,10 @@ class ThreePLController extends Controller
 
     public function stations(){
         $json = 'json/3pl-services/stations';
+        $regions = DB::table('Regions')->select('RegionCode')->groupBy('RegionCode')->orderBy('RegionCode','asc')->get();
+        $types = DB::table('ServiceTypes3PL')->orderBy('ServiceTypeEn','asc')->get();
 
-        return view('backend.3pl.stations',compact('json'));
+        return view('backend.3pl.stations',compact('json','regions','types'));
     }
 
     public function expresses(){
@@ -32,8 +34,9 @@ class ThreePLController extends Controller
 
     public function branches(){
         $json = 'json/3pl-services/branches';
+        $regions = DB::table('Regions')->select('RegionCode')->groupBy('RegionCode')->orderBy('RegionCode','asc')->get();
 
-        return view('backend.3pl.branches',compact('json'));
+        return view('backend.3pl.branches',compact('json','regions'));
     }
 
     public function related_branches(){
@@ -216,6 +219,63 @@ class ThreePLController extends Controller
         return response()->json($response);
     }
 
-    
+    public function saved_station(Request $request){
+        $station = DB::table('Stations3PL')->where('StationNameEn',$request->station_name_en)
+            ->where('StationNameMm',$request->station_name_mm)
+            ->where('ServiceType',$request->service_type)
+            ->first();
+
+        if(!$station){
+            DB::table('Stations3PL')->insert([
+                'StationNameEn' => $request->station_name_en,
+                'StationNameMm' => $request->station_name_mm,
+                'StationRegionCode' => $express[1],
+                'ExpressNameEn' => $express[0],
+                'StationNameMm' => $station[1],
+                'StationNameEn' => $station[0],
+                'StationRegionCode' => $request->region,
+                'ServiceType' => $request->type,
+                'Default' => $request->default_route,
+                'SLA' => $request->sla,
+                'Active' => $request->active,
+                'CreatedAt'         => date('Y-m-d H:i:s'),
+                'UpdatedAt'         => date('Y-m-d H:i:s'),
+            ]);
+
+            $response['success'] = 1;
+            $response['message'] = 'Station has been created.';
+        }else{
+            $response['success'] = 0;
+            $response['message'] = 'Station is not exists.';
+        }
+
+        return response()->json($response);        
+    }
+
+    public function saved_branch(Request $request){
+        $branch = DB::table('Branches3PL')->where('BranchNameEn',$request->en_name)
+            ->where('BranchNameMm',$request->mm_name)
+            ->where('RegionCode',$request->region_code)
+            ->first();
+
+        if(!$branch){
+            DB::table('Branches3PL')->insert([
+                'BranchNameEn' => $request->en_name,
+                'BranchNameMm' => $request->mm_name,
+                'RegionCode' => $request->region_code,
+                'Active' => $request->active,
+                'CreatedAt'         => date('Y-m-d H:i:s'),
+                'UpdatedAt'         => date('Y-m-d H:i:s'),
+            ]);
+
+            $response['success'] = 1;
+            $response['message'] = 'Branch has been created.';
+        }else{
+            $response['success'] = 0;
+            $response['message'] = 'Branch is already exists.';
+        }
+
+        return response()->json($response);        
+    }
     
 }

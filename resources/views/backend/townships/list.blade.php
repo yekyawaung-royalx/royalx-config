@@ -543,14 +543,14 @@
                         success: function(data){
                                 if(data.total > 0){
                                         $.each(data.data, function (i, item) {
-                                                 $("#fetched-data").append('<tr>'
+                                                        $("#fetched-data").append('<tr>'
                                                                +'<td><code class="h5 text-secondary">'+item.PostalCode+'</code></td>'
-                                                        +'<td><span class="'+(item.Active == 1? "text-primary":"text-danger" )+'">'+item.TownshipNameEn+'<br>'+item.TownshipNameMm+'</span></td>'
+                                                        +'<td><span class="fw-semibold '+(item.Active == 1? "text-secondary":"text-danger" )+'">'+item.TownshipNameEn+'<br>'+item.TownshipNameMm+'</span></td>'
                                                         +'<td><span class="text-secondary">'+item.RegionEn+'<br>'+item.RegionMm+'</span></td>'                                                        
                                                        +'<td>'+(item.Active == 1? '<span class="badge badge-center rounded-pill bg-success"><i class="bx bx-check"></i></span>':'<span class="badge badge-center rounded-pill bg-danger"><i class="bx bx-x"></i></span>')+'</td>'
                                                         +'<td>'
                                                             +'<div class="btn-group">'
-                                                                +'<button type="button" class="btn btn-icon btn-sm btn-outline-primary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" cursorshover="true"><i class="bx bx-dots-vertical-rounded" cursorshover="true"></i></button>'
+                                                                +'<button type="button" class="btn btn-icon btn-sm btn-outline-secondary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" cursorshover="true"><i class="bx bx-dots-vertical-rounded" cursorshover="true"></i></button>'
                                                                 +'<ul class="dropdown-menu dropdown-menu-end" style="">'
                                                                     +'<li ><a class="dropdown-item text-success  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#ViewTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-search" cursorshover="true"></span> Quick View</a></li>'
                                                                     +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
@@ -559,7 +559,7 @@
                                                              +'</div>'
                                                         +'</td>'
                                                 +'</tr>');
-                                        });
+                                                });
 
                                         $(".data-loading").hide();
                                         
@@ -643,27 +643,23 @@
                         if(data.total > 0){
                                 $("#fetched-data").empty();
                                 $.each(data.data, function (i, item) {
-                                    $("#fetched-data").append('<tr>'
-                                        +'<td class="text-muted">'+item.Id+'</td>'
-                                        +'<td><span class="text-danger">'+item.MmName+'<br>'+item.EnName+'</span></td>'
-                                        +'<td>'+item.Region+'</td>'
-                                        +'<td><code class="h6 text-primary">'+item.TownshipCode+'</code></td>'
-                                        +'<td><code class="h6 text-danger">'+item.PostalCode+'</code></td>'
-                                        +'<td>'+item.Branch+'</td>'
-                                        +'<td>'+(item.Active == 1? '<span class="tf-icons bx bx-check text-success" cursorshover="true"></span>':'<span class="tf-icons bx bx-x text-danger" cursorshover="true"></span>')+'</td>'
-                                        +'<td>'
-                                                +'<button type="button" class="btn btn-icon btn-success btn-sm me-1" data-bs-toggle="modal" data-bs-target="#EditTownship" cursorshover="true">'
-                                                +'<span class="tf-icons bx bx-search" cursorshover="true"></span>'
-                                            +'</button>'
-                                                +'<button type="button" class="btn btn-icon btn-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#EditTownship" cursorshover="true">'
-                                                +'<span class="tf-icons bx bx-pencil" cursorshover="true"></span>'
-                                            +'</button>'
-                                                +'<button type="button" class="btn btn-icon btn-danger btn-sm" cursorshover="true">'
-                                                    +'<span class="tf-icons bx bx-trash" cursorshover="true"></span>'
-                                                +'</button>'
-                                        +'</td>'
-                                    +'</tr>');
-                                });
+                                                        $("#fetched-data").append('<tr>'
+                                                               +'<td><code class="h5 text-secondary">'+item.PostalCode+'</code></td>'
+                                                        +'<td><span class="fw-semibold '+(item.Active == 1? "text-secondary":"text-danger" )+'">'+item.TownshipNameEn+'<br>'+item.TownshipNameMm+'</span></td>'
+                                                        +'<td><span class="text-secondary">'+item.RegionEn+'<br>'+item.RegionMm+'</span></td>'                                                        
+                                                       +'<td>'+(item.Active == 1? '<span class="badge badge-center rounded-pill bg-success"><i class="bx bx-check"></i></span>':'<span class="badge badge-center rounded-pill bg-danger"><i class="bx bx-x"></i></span>')+'</td>'
+                                                        +'<td>'
+                                                            +'<div class="btn-group">'
+                                                                +'<button type="button" class="btn btn-icon btn-sm btn-outline-secondary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" cursorshover="true"><i class="bx bx-dots-vertical-rounded" cursorshover="true"></i></button>'
+                                                                +'<ul class="dropdown-menu dropdown-menu-end" style="">'
+                                                                    +'<li ><a class="dropdown-item text-success  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#ViewTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-search" cursorshover="true"></span> Quick View</a></li>'
+                                                                    +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
+                                                                    +'<li><a class="dropdown-item text-danger  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#DeleteTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-trash" cursorshover="true"></span> Delete Item</a></li>'
+                                                                +'</ul>'
+                                                             +'</div>'
+                                                        +'</td>'
+                                                +'</tr>');
+                                                });
 
                                 $(".data-loading").hide();
 

@@ -272,7 +272,7 @@
                             <div class="col mb-3">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label class="switch switch-primary">
+                                        <label class="switch switch-secondary">
                                             <input type="checkbox" class="switch-input" id="active" checked />
                                             <span class="switch-toggle-slider">
                                                 <span class="switch-on">
@@ -286,7 +286,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="switch switch-primary">
+                                        <label class="switch switch-secondary">
                                             <input type="checkbox" class="switch-input" id="default" />
                                             <span class="switch-toggle-slider">
                                                 <span class="switch-on">
@@ -307,7 +307,7 @@
                         <input type="hidden" id="edit-id" class="form-control">
                         <input type="hidden" id="edit-region-type" class="form-control">
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary btn-save">Save</button>
+                        <button type="button" class="btn btn-secondary btn-save">Save</button>
                     </div>
                 </form>
             </div>
@@ -409,7 +409,7 @@
                                 success: function(data){
                                         if(data.total > 0){
                                                 $.each(data.data, function (i, item) {
-                                                        $("#fetched-data").append('<tr>'
+                                                    $("#fetched-data").append('<tr>'
                                                         +'<td><span class="fw-semibold">'+item.FromBranchName+'</span></td>'
                                                         +'<td><span class="fw-semibold">'+item.ToBranchName+'</span></td>'
                                                         +'<td><span class="text-secondary">'+item.ExpressNameMm+'<br>'+item.ExpressNameEn+'</span></td>'
@@ -449,7 +449,7 @@
                                                 $("#next-btn").val(data.next_page_url);
 
                                                 $.each(data.links, function( key, value ) {
-                                                $("#links").append('<button type="button" class="btn btn-primary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
+                                                $("#links").append('<button type="button" class="btn btn-secondary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
                                                 });
 
                                                 $(".loading").addClass('hide');
@@ -481,7 +481,7 @@
                         success: function(data){
                                 if(data.total > 0){
                                         $.each(data.data, function (i, item) {
-                                                        $("#fetched-data").append('<tr>'
+                                                    $("#fetched-data").append('<tr>'
                                                         +'<td><span class="fw-semibold">'+item.FromBranchName+'</span></td>'
                                                         +'<td><span class="fw-semibold">'+item.ToBranchName+'</span></td>'
                                                         +'<td><span class="text-secondary">'+item.ExpressNameMm+'<br>'+item.ExpressNameEn+'</span></td>'
@@ -492,6 +492,7 @@
                                                             +'<div class="btn-group">'
                                                                 +'<button type="button" class="btn btn-icon btn-sm btn-outline-secondary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" cursorshover="true"><i class="bx bx-dots-vertical-rounded" cursorshover="true"></i></button>'
                                                                 +'<ul class="dropdown-menu dropdown-menu-end" style="">'
+                                                                   +'<li><a class="dropdown-item text-success" href="'+url+'/admin/3pl-services/routes/'+item.Id+'" cursorshover="true" ><span class="tf-icons bx bx-search" cursorshover="true"></span> View Item</a></li>'
                                                                     +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditExpress" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
                                                                     +'<li><a class="dropdown-item text-muted  load-id disabled" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#DeleteExpress" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-trash" cursorshover="true"></span> Delete Item</a></li>'
                                                                 +'</ul>'
@@ -520,7 +521,7 @@
                                         $("#next-btn").val(data.next_page_url);
 
                                         $.each(data.links, function( key, value ) {
-                                        $("#links").append('<button type="button" class="btn btn-primary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
+                                        $("#links").append('<button type="button" class="btn btn-secondary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
                                         });
 
                                         $(".loading").addClass('hide');

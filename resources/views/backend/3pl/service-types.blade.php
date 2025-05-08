@@ -75,9 +75,6 @@
                                                         </div>
                                                         <div class="col-md-8">
                                                                 <div class="pull-right">
-                                                                        <button type="button" class="btn btn-secondary btn-new  v-top" data-bs-toggle="modal" data-bs-target="#AddNewTownship" cursorshover="true">
-                                                                                <span class="tf-icons bx bx-plus" cursorshover="true"></span> Add New
-                                                                        </button>
                                                                         <div class="btn-group v-top" role="group" aria-label="Basic example">
                                                                                 <button type="button" class="btn btn-secondary pagination-btn" id="prev-btn" cursorshover="true"><i class="tf-icon bx bx-chevrons-left"></i></button>
                                                                                 <button type="button" class="btn btn-outline-secondary current-page" data-bs-toggle="modal" data-bs-target="#modalTop">0</button>
@@ -211,15 +208,14 @@
                                         if(data.total > 0){
                                                 $.each(data.data, function (i, item) {
                                                         $("#fetched-data").append('<tr>'
-                                                         +'<td><span class="fw-semibold '+(item.Active == 1? "text-secondary":"text-danger" )+'">'+item.ServiceTypeEn+'</span></td>'
+                                                         +'<td><span class="fw-semibold text-secondary">'+item.ServiceTypeEn+'</span></td>'
                                                         +'<td><span class="text-secondary">'+item.ServiceTypeMm+'</span></td>'                                                        
                                                        +'<td><span class="badge badge-center rounded-pill bg-success"><i class="bx bx-check"></i></span></td>'
                                                         +'<td>'
                                                             +'<div class="btn-group">'
                                                                 +'<button type="button" class="btn btn-icon btn-sm btn-outline-secondary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" cursorshover="true"><i class="bx bx-dots-vertical-rounded" cursorshover="true"></i></button>'
                                                                 +'<ul class="dropdown-menu dropdown-menu-end" style="">'
-                                                                    +'<li ><a class="dropdown-item text-success  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#ViewTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-search" cursorshover="true"></span> Quick View</a></li>'
-                                                                    +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
+                                                                    +'<li ><a class="dropdown-item text-success  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#ViewTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-search" cursorshover="true"></span> View Item</a></li>'
                                                                     +'<li><a class="dropdown-item text-danger  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#DeleteTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-trash" cursorshover="true"></span> Delete Item</a></li>'
                                                                 +'</ul>'
                                                              +'</div>'
@@ -247,7 +243,7 @@
                                                 $("#next-btn").val(data.next_page_url);
 
                                                 $.each(data.links, function( key, value ) {
-                                                $("#links").append('<button type="button" class="btn btn-primary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
+                                                $("#links").append('<button type="button" class="btn btn-secondary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
                                                 });
 
                                                 $(".loading").addClass('hide');
@@ -280,15 +276,14 @@
                                 if(data.total > 0){
                                         $.each(data.data, function (i, item) {
                                                         $("#fetched-data").append('<tr>'
-                                                         +'<td><span class="fw-semibold '+(item.Active == 1? "text-secondary":"text-danger" )+'">'+item.ServiceTypeEn+'</span></td>'
+                                                         +'<td><span class="fw-semibold text-secondary">'+item.ServiceTypeEn+'</span></td>'
                                                         +'<td><span class="text-secondary">'+item.ServiceTypeMm+'</span></td>'                                                        
                                                        +'<td><span class="badge badge-center rounded-pill bg-success"><i class="bx bx-check"></i></span></td>'
                                                         +'<td>'
                                                             +'<div class="btn-group">'
                                                                 +'<button type="button" class="btn btn-icon btn-sm btn-outline-secondary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" cursorshover="true"><i class="bx bx-dots-vertical-rounded" cursorshover="true"></i></button>'
                                                                 +'<ul class="dropdown-menu dropdown-menu-end" style="">'
-                                                                    +'<li ><a class="dropdown-item text-success  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#ViewTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-search" cursorshover="true"></span> Quick View</a></li>'
-                                                                    +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
+                                                                    +'<li ><a class="dropdown-item text-success  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#ViewTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-search" cursorshover="true"></span> View Item</a></li>'
                                                                     +'<li><a class="dropdown-item text-danger  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#DeleteTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-trash" cursorshover="true"></span> Delete Item</a></li>'
                                                                 +'</ul>'
                                                              +'</div>'
@@ -316,7 +311,7 @@
                                         $("#next-btn").val(data.next_page_url);
 
                                         $.each(data.links, function( key, value ) {
-                                        $("#links").append('<button type="button" class="btn btn-primary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
+                                        $("#links").append('<button type="button" class="btn btn-secondary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
                                         });
 
                                         $(".loading").addClass('hide');
@@ -328,16 +323,7 @@
                         });
                 });
                 
-                $("#new-township-code").keyup(function(){
-                    reg_code = $("#edit-region :selected").val();
-                         township = $("#new-township-code").val();
-                        raw =  $("#new-region :selected").text();
-                          region =  raw.substr(raw.length - 3);
-                         region = region.substring(0, region.length - 1);
-
-                        $("#new-postal-code").val(region+township);
-                        $("#new-region-code").val(reg_code);
-                });
+                
 
                 $('#new-region,#edit-region').on("change",function search(e) {
                     reg_code = $(this).val();

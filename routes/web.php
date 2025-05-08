@@ -16,9 +16,6 @@ use Illuminate\Support\Facades\Artisan;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/livechat', function () {
-    return view('livechat');
-});
 Route::get('/test',function (){
     $_3pl = [
             'Stations3PL' => DB::table('Stations3PL')->count(),
@@ -29,12 +26,6 @@ Route::get('/test',function (){
 
     return $_3pl;
 });
-
-Route::get('/widget', function () {
-    
-    return view('widget');
-});
-
 
 Route::get('/greeting/{locale}', function ($locale) {
     if (! in_array($locale, ['en', 'es', 'fr'])) {
@@ -137,6 +128,8 @@ Route::prefix('admin')->group(function () {
     Route::post('3pl-services/fetched-express',[App\Http\Controllers\ThreePLController::class, 'fetched_express']);
     Route::put('3pl-services/updated-express',[App\Http\Controllers\ThreePLController::class, 'updated_express']);
     Route::post('3pl-services/saved-route',[App\Http\Controllers\ThreePLController::class, 'saved_route']);
+    Route::post('3pl-services/saved-station',[App\Http\Controllers\ThreePLController::class, 'saved_station']);
+    Route::post('3pl-services/saved-branch',[App\Http\Controllers\ThreePLController::class, 'saved_branch']);
 });
 
 Route::prefix('json')->group(function () {

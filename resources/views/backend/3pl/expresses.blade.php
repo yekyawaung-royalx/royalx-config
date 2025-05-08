@@ -77,9 +77,6 @@
                                                         </div>
                                                         <div class="col-md-8">
                                                                 <div class="pull-right">
-                                                                        <button type="button" class="btn btn-secondary btn-new  v-top" data-bs-toggle="modal" data-bs-target="#AddNewTownship" cursorshover="true">
-                                                                                <span class="tf-icons bx bx-plus" cursorshover="true"></span> Add New
-                                                                        </button>
                                                                         <div class="btn-group v-top" role="group" aria-label="Basic example">
                                                                                 <button type="button" class="btn btn-secondary pagination-btn" id="prev-btn" cursorshover="true"><i class="tf-icon bx bx-chevrons-left"></i></button>
                                                                                 <button type="button" class="btn btn-outline-secondary current-page" data-bs-toggle="modal" data-bs-target="#modalTop">0</button>
@@ -212,7 +209,7 @@
                        
                         <div class="row g-2">
                             <div class="col mb-3">
-                                <label class="switch switch-primary">
+                                <label class="switch switch-secondary">
                                     <input type="checkbox" class="switch-input" id="edit-active" />
                                     <span class="switch-toggle-slider">
                                         <span class="switch-on">
@@ -231,7 +228,7 @@
                         <input type="hidden" id="edit-id" class="form-control">
                         <input type="hidden" id="edit-region-type" class="form-control">
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary btn-update">Save</button>
+                        <button type="button" class="btn btn-secondary btn-update">Save</button>
                     </div>
                 </form>
             </div>
@@ -320,7 +317,7 @@
                                                 $("#next-btn").val(data.next_page_url);
 
                                                 $.each(data.links, function( key, value ) {
-                                                $("#links").append('<button type="button" class="btn btn-primary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
+                                                $("#links").append('<button type="button" class="btn btn-secondary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
                                                 });
 
                                                 $(".loading").addClass('hide');
@@ -388,7 +385,7 @@
                                         $("#next-btn").val(data.next_page_url);
 
                                         $.each(data.links, function( key, value ) {
-                                        $("#links").append('<button type="button" class="btn btn-primary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
+                                        $("#links").append('<button type="button" class="btn btn-secondary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
                                         });
 
                                         $(".loading").addClass('hide');

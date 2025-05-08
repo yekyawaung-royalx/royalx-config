@@ -75,7 +75,7 @@
                                                         </div>
                                                         <div class="col-md-8">
                                                                 <div class="pull-right">
-                                                                        <button type="button" class="btn btn-secondary btn-new  v-top" data-bs-toggle="modal" data-bs-target="#AddNewTownship" cursorshover="true">
+                                                                        <button type="button" class="btn btn-secondary btn-new  v-top" data-bs-toggle="modal" data-bs-target="#NewStation" cursorshover="true">
                                                                                 <span class="tf-icons bx bx-plus" cursorshover="true"></span> Add New
                                                                         </button>
                                                                         <div class="btn-group v-top" role="group" aria-label="Basic example">
@@ -163,6 +163,78 @@
                         </form>
                 </div>
         </div>
+
+        <!-- New Modal -->
+        <div class="modal modal-top fade" id="NewStation" tabindex="-1">
+            <div class="modal-dialog">
+                <form class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTopTitle">Add 3PL Station</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="station-name-en" class="form-label">Station Name En <span class="fw-bolder text-danger" >*</span></label>
+                                <input type="text" id="station-name-en" class="form-control" placeholder="Aung Mingalar Bus Station" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="station-name-mm" class="form-label">Station Name Mm <span class="fw-bolder text-danger" >*</span></label>
+                                <input type="text" id="station-name-mm" class="form-control" placeholder="အောင်မင်္ဂလာအဝေးပြေးကားဝင်း" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="region-code" class="form-label">Station Region Code <span class="fw-bolder text-danger" >*</span></label>
+                                <select id="region-code" class="select2 form-select form-select-lg" data-allow-clear="true">
+                                @foreach($regions as $region)
+                                <option value="{{ $region->RegionCode }}">{{ $region->RegionCode }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="service-type" class="form-label">Service Type <span class="fw-bolder text-danger" >*</span></label>
+                                <select id="service-type" class="select2 form-select form-select-lg" data-allow-clear="true">
+                                    @foreach($types as $type)
+                                    <option value="{{ $type->ServiceTypeEn }}">{{ $type->ServiceTypeEn }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col mb-3">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="switch switch-secondary">
+                                            <input type="checkbox" class="switch-input" id="active" checked />
+                                            <span class="switch-toggle-slider">
+                                                <span class="switch-on">
+                                                    <i class="bx bx-check"></i>
+                                                </span>
+                                                <span class="switch-off">
+                                                    <i class="bx bx-x"></i>
+                                                </span>
+                                            </span>
+                                            <span class="switch-label">Active</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="edit-id" class="form-control">
+                        <input type="hidden" id="edit-region-type" class="form-control">
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary btn-save">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div> 
  
   
     <!-- Core JS -->
@@ -218,7 +290,7 @@
                                                             +'<div class="btn-group">'
                                                                 +'<button type="button" class="btn btn-icon btn-sm btn-outline-secondary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" cursorshover="true"><i class="bx bx-dots-vertical-rounded" cursorshover="true"></i></button>'
                                                                 +'<ul class="dropdown-menu dropdown-menu-end" style="">'
-                                                                    +'<li ><a class="dropdown-item text-success  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#ViewTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-search" cursorshover="true"></span> Quick View</a></li>'
+                                                                    +'<li ><a class="dropdown-item text-success" href="'+url+'/admin/3pl-services/stations/'+item.Id+'" cursorshover="true"><span class="tf-icons bx bx-search" cursorshover="true"></span> View Item</a></li>'
                                                                     +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
                                                                     +'<li><a class="dropdown-item text-danger  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#DeleteTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-trash" cursorshover="true"></span> Delete Item</a></li>'
                                                                 +'</ul>'
@@ -247,7 +319,7 @@
                                                 $("#next-btn").val(data.next_page_url);
 
                                                 $.each(data.links, function( key, value ) {
-                                                $("#links").append('<button type="button" class="btn btn-primary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
+                                                $("#links").append('<button type="button" class="btn btn-secondary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
                                                 });
 
                                                 $(".loading").addClass('hide');
@@ -278,7 +350,7 @@
                         data: {},
                         success: function(data){
                                 if(data.total > 0){
-                                        $.each(data.data, function (i, item) {
+                                    $.each(data.data, function (i, item) {
                                                         $("#fetched-data").append('<tr>'
                                                          +'<td><span class="text-secondary">'+item.StationNameEn+'<br><span class="fw-light ">'+item.StationNameMm+'</span></span></td>'
                                                          +'<td><span class="fw-semibold">'+item.StationRegionCode+'</span></td>' 
@@ -287,7 +359,7 @@
                                                             +'<div class="btn-group">'
                                                                 +'<button type="button" class="btn btn-icon btn-sm btn-outline-secondary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" cursorshover="true"><i class="bx bx-dots-vertical-rounded" cursorshover="true"></i></button>'
                                                                 +'<ul class="dropdown-menu dropdown-menu-end" style="">'
-                                                                    +'<li ><a class="dropdown-item text-success  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#ViewTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-search" cursorshover="true"></span> Quick View</a></li>'
+                                                                    +'<li ><a class="dropdown-item text-success  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#ViewTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-search" cursorshover="true"></span> View Item</a></li>'
                                                                     +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
                                                                     +'<li><a class="dropdown-item text-danger  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#DeleteTownship" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-trash" cursorshover="true"></span> Delete Item</a></li>'
                                                                 +'</ul>'
@@ -316,7 +388,7 @@
                                         $("#next-btn").val(data.next_page_url);
 
                                         $.each(data.links, function( key, value ) {
-                                        $("#links").append('<button type="button" class="btn btn-primary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
+                                        $("#links").append('<button type="button" class="btn btn-secondary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
                                         });
 
                                         $(".loading").addClass('hide');
@@ -337,6 +409,45 @@
 
                         $("#new-postal-code").val(region+township);
                         $("#new-region-code").val(reg_code);
+                });
+
+                
+                $('.btn-save').on("click",function search(e) {
+                        var station_name_en = $("#station-name-en").val();
+                        var station_name_mm = $("#station-name-mm").val();
+                        var region_code = $("#region_code").val();
+                        var service_type = $("#service-type").val();
+                       
+                        if($("#active").prop('checked') == true){
+                            active = 1;
+                        }else{ 
+                            active = 0;
+                        }
+
+                        $.ajax({
+                                url: url+'/admin/3pl-services/saved-station',
+                                type: 'POST',
+                                data: {
+                                        station_name_en:station_name_en,
+                                        station_name_mm:station_name_mm,
+                                        region_code:region_code,
+                                        service_type:service_type,
+                                        active:active,
+                                        _method:'POST',
+                                        _token:token
+                                },
+                                success: function(data){
+                                        if(data.success == 1){
+                                                $("#success-message").text(data.message);
+                                                $("#successToast").toast("show");
+
+                                                fetched_data();   
+                                        }else{
+                                                $("#error-message").text(data.message);
+                                                $("#errorToast").toast("show");
+                                        }
+                                }
+                        });
                 });
 
                 $('#new-region,#edit-region').on("change",function search(e) {

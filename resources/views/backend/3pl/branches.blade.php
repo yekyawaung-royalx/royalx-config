@@ -77,7 +77,7 @@
                                                         </div>
                                                         <div class="col-md-8">
                                                                 <div class="pull-right">
-                                                                        <button type="button" class="btn btn-secondary btn-new  v-top" data-bs-toggle="modal" data-bs-target="#AddNewTownship" cursorshover="true">
+                                                                        <button type="button" class="btn btn-secondary btn-new  v-top" data-bs-toggle="modal" data-bs-target="#AddNewBranch" cursorshover="true">
                                                                                 <span class="tf-icons bx bx-plus" cursorshover="true"></span> Add New
                                                                         </button>
                                                                         <div class="btn-group v-top" role="group" aria-label="Basic example">
@@ -108,6 +108,7 @@
                                                                                 <tr>
                                                                                         <th class="text-muted unset">Branch Name EN</th>
                                                                                         <th class="text-muted unset">Branch Name MM</th>
+                                                                                        <th class="text-muted unset">Region Code</th>
                                                                                         <th class="text-muted unset">Active</th>
                                                                                         <th class="text-muted unset">Action</th>
                                                                                 </tr>
@@ -188,32 +189,42 @@
             </div>
         </div>
 
-        <!-- Edit Modal -->
-        <div class="modal modal-top fade" id="EditExpress" tabindex="-1">
+        <!-- New Modal -->
+        <div class="modal modal-top fade" id="AddNewBranch" tabindex="-1">
             <div class="modal-dialog">
                 <form class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalTopTitle">Edit Express</h5>
+                        <h5 class="modal-title" id="modalTopTitle">Add New Branch</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="edit-mmname" class="form-label">Express EN Name</label>
-                                <input type="text" id="edit-enname" class="form-control" value="loading ..." disabled>
+                                <label for="branch-mmname" class="form-label">Branch Name EN</label>
+                                <input type="text" id="branch-enname" class="form-control" placeholder="ALN">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="edit-enname" class="form-label">Express MM Name</label>
-                                <input type="text" id="edit-mmname" class="form-control" value="loading ..." disabled>
+                                <label for="branch-enname" class="form-label">Branch Name MM</label>
+                                <input type="text" id="branch-mmname" class="form-control" placeholder="အောင်လံ">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="region-code" class="form-label">Station Region Code <span class="fw-bolder text-danger" >*</span></label>
+                                <select id="region-code" class="select2 form-select form-select-lg" data-allow-clear="true">
+                                @foreach($regions as $region)
+                                <option value="{{ $region->RegionCode }}">{{ $region->RegionCode }}</option>
+                                @endforeach
+                                </select>
                             </div>
                         </div>
                        
                         <div class="row g-2">
                             <div class="col mb-3">
-                                <label class="switch switch-primary">
-                                    <input type="checkbox" class="switch-input" id="edit-active" />
+                                <label class="switch switch-secondary">
+                                    <input type="checkbox" class="switch-input" id="branch-active" checked />
                                     <span class="switch-toggle-slider">
                                         <span class="switch-on">
                                             <i class="bx bx-check"></i>
@@ -228,15 +239,13 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="hidden" id="edit-id" class="form-control">
-                        <input type="hidden" id="edit-region-type" class="form-control">
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary btn-update">Save</button>
+                        <button type="button" class="btn btn-secondary btn-save">Save</button>
                     </div>
                 </form>
             </div>
         </div>  
- 
+    
   
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -285,9 +294,10 @@
                                         if(data.total > 0){
                                                 $.each(data.data, function (i, item) {
                                                         $("#fetched-data").append('<tr>'
-                                                         +'<td><span class="fw-semibold '+(item.Active == 1? "text-secondary":"text-danger" )+'">'+item.BranchNameEn+'</span></td>'
-                                                        +'<td><span class="text-secondary">'+item.BranchNameMm+'</span></td>'                                                        
-                                                       +'<td>'+(item.Active == 1? '<span class="badge badge-center rounded-pill bg-success"><i class="bx bx-check"></i></span>':'<span class="badge badge-center rounded-pill bg-danger"><i class="bx bx-x"></i></span>')+'</td>'
+                                                        +'<td><span class="fw-semibold '+(item.Active == 1? "text-secondary":"text-danger" )+'">'+item.BranchNameEn+'</span></td>'
+                                                        +'<td><span class="text-secondary">'+item.BranchNameMm+'</span></td>'   
+                                                        +'<td><span class="text-secondary">'+item.RegionCode+'</span></td>'                                                     
+                                                        +'<td>'+(item.Active == 1? '<span class="badge badge-center rounded-pill bg-success"><i class="bx bx-check"></i></span>':'<span class="badge badge-center rounded-pill bg-danger"><i class="bx bx-x"></i></span>')+'</td>'
                                                         +'<td>'
                                                             +'<div class="btn-group">'
                                                                 +'<button type="button" class="btn btn-icon btn-sm btn-outline-secondary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" cursorshover="true"><i class="bx bx-dots-vertical-rounded" cursorshover="true"></i></button>'
@@ -320,7 +330,7 @@
                                                 $("#next-btn").val(data.next_page_url);
 
                                                 $.each(data.links, function( key, value ) {
-                                                $("#links").append('<button type="button" class="btn btn-primary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
+                                                $("#links").append('<button type="button" class="btn btn-secondary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
                                                 });
 
                                                 $(".loading").addClass('hide');
@@ -353,9 +363,10 @@
                                 if(data.total > 0){
                                         $.each(data.data, function (i, item) {
                                                         $("#fetched-data").append('<tr>'
-                                                         +'<td><span class="fw-semibold '+(item.Active == 1? "text-secondary":"text-danger" )+'">'+item.BranchNameEn+'</span></td>'
-                                                        +'<td><span class="text-secondary">'+item.BranchNameMm+'</span></td>'                                                        
-                                                       +'<td>'+(item.Active == 1? '<span class="badge badge-center rounded-pill bg-success"><i class="bx bx-check"></i></span>':'<span class="badge badge-center rounded-pill bg-danger"><i class="bx bx-x"></i></span>')+'</td>'
+                                                        +'<td><span class="fw-semibold '+(item.Active == 1? "text-secondary":"text-danger" )+'">'+item.BranchNameEn+'</span></td>'
+                                                        +'<td><span class="text-secondary">'+item.BranchNameMm+'</span></td>'   
+                                                        +'<td><span class="text-secondary">'+item.RegionCode+'</span></td>'                                                     
+                                                        +'<td>'+(item.Active == 1? '<span class="badge badge-center rounded-pill bg-success"><i class="bx bx-check"></i></span>':'<span class="badge badge-center rounded-pill bg-danger"><i class="bx bx-x"></i></span>')+'</td>'
                                                         +'<td>'
                                                             +'<div class="btn-group">'
                                                                 +'<button type="button" class="btn btn-icon btn-sm btn-outline-secondary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" cursorshover="true"><i class="bx bx-dots-vertical-rounded" cursorshover="true"></i></button>'
@@ -366,7 +377,7 @@
                                                              +'</div>'
                                                         +'</td>'
                                                 +'</tr>');
-                                                });
+                                            });
 
                                         $(".data-loading").hide();
                                         
@@ -388,7 +399,7 @@
                                         $("#next-btn").val(data.next_page_url);
 
                                         $.each(data.links, function( key, value ) {
-                                        $("#links").append('<button type="button" class="btn btn-primary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
+                                        $("#links").append('<button type="button" class="btn btn-secondary btn-sm pagination-btn me-1 mb-1 '+(data.current_page == value.label ? 'disabled':(value.url == null ? 'disabled':''))+'" cursorshover="true" value="'+value.url+'">'+value.label+'</button>');
                                         });
 
                                         $(".loading").addClass('hide');
@@ -429,6 +440,42 @@
 
                                         $("#edit-enname").prop('disabled',false);
                                         $("#edit-mmname").prop('disabled',false);
+                                }
+                        });
+                });
+
+                $('body').delegate(".btn-save","click",function () {
+                        var en_name = $("#branch-enname").val();
+                        var mm_name = $("#branch-mmname").val();
+                        var region_code = $("#region-code").val();
+                        if($("#branch-active").prop('checked') == true){
+                            active = 1;
+                        }else{ 
+                            active = 0;
+                        }
+
+                        $('#EditExpress').modal('hide');
+
+                        $.ajax({
+                                url: url+'/admin/3pl-services/saved-branch',
+                                type: 'POST',
+                                data: {
+                                        en_name:en_name,
+                                        mm_name:mm_name,
+                                        region_code:region_code,
+                                        active:active,
+                                        _method:'POST',
+                                        _token:token
+                                },
+                                success: function(data){
+                                        if(data.success == 1){
+                                                $("#success-message").text(data.message);
+                                                $("#successToast").toast("show");
+                                                fetched_data();   
+                                        }else{
+                                                $("#error-message").text(data.message);
+                                                $("#errorToast").toast("show");
+                                        }
                                 }
                         });
                 });
