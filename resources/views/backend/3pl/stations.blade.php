@@ -164,6 +164,28 @@
                 </div>
         </div>
 
+        <div class="bs-toast toast toast-placement-ex toast-top-right fade bg-secondary" id="successToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+            <div class="toast-header">
+                <i class="bx bx-bell me-2"></i>
+                <div class="me-auto fw-medium">Success</div>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" cursorshover="true"></button>
+            </div>
+            <div class="toast-body">
+                <span id="success-message">...</span>
+            </div>
+        </div>
+
+        <div class="bs-toast toast toast-placement-ex toast-top-right fade  bg-danger" id="errorToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+            <div class="toast-header">
+                <i class="bx bx-bell me-2"></i>
+                <div class="me-auto fw-medium">Error</div>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" cursorshover="true"></button>
+            </div>
+            <div class="toast-body">
+                <span id="error-message"></span>
+            </div>
+        </div>
+
         <!-- New Modal -->
         <div class="modal modal-top fade" id="NewStation" tabindex="-1">
             <div class="modal-dialog">
@@ -423,6 +445,8 @@
                         }else{ 
                             active = 0;
                         }
+
+                        $('#NewStation').modal('hide');
 
                         $.ajax({
                                 url: url+'/admin/3pl-services/saved-station',
