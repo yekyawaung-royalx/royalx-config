@@ -415,7 +415,7 @@
                 $('.btn-save').on("click",function search(e) {
                         var station_name_en = $("#station-name-en").val();
                         var station_name_mm = $("#station-name-mm").val();
-                        var region_code = $("#region_code").val();
+                        var region_code = $("#region-code").val();
                         var service_type = $("#service-type").val();
                        
                         if($("#active").prop('checked') == true){
