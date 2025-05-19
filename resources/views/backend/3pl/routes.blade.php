@@ -304,8 +304,6 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="hidden" id="edit-id" class="form-control">
-                        <input type="hidden" id="edit-region-type" class="form-control">
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-secondary btn-save">Save</button>
                     </div>
@@ -314,41 +312,114 @@
         </div> 
 
         <!-- Edit Modal -->
-        <div class="modal modal-top fade" id="EditExpress" tabindex="-1">
+        <div class="modal modal-top fade" id="EditRoute" tabindex="-1">
             <div class="modal-dialog">
                 <form class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalTopTitle">Edit Express</h5>
+                        <h5 class="modal-title" id="modalTopTitle">Edit 3PL Route</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="edit-mmname" class="form-label">Express EN Name</label>
-                                <input type="text" id="edit-enname" class="form-control" value="loading ..." disabled>
+                                <label for="edit-from-branch" class="form-label">From Branch <span class="fw-bolder text-danger" >*</span></label>
+                                <select id="edit-from-branch" class="select2 form-select form-select-lg" data-allow-clear="true">
+                                @foreach($branches as $from)
+                                <option value="{{ $from->BranchNameEn }}">{{ $from->BranchNameEn.' - '.$from->BranchNameMm  }} ({{ $from->RegionCode }})</option>
+                                @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="edit-enname" class="form-label">Express MM Name</label>
-                                <input type="text" id="edit-mmname" class="form-control" value="loading ..." disabled>
+                                <label for="edit-to-branch" class="form-label">To Branch <span class="fw-bolder text-danger" >*</span></label>
+                                <select id="edit-to-branch" class="select2 form-select form-select-lg" data-allow-clear="true">
+                                @foreach($branches as $from)
+                                <option value="{{ $from->BranchNameEn }}">{{ $from->BranchNameEn.' - '.$from->BranchNameMm  }} ({{ $from->RegionCode }})</option>
+                                @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="edit-express" class="form-label">Express <span class="fw-bolder text-danger" >*</span></label>
+                                <select id="edit-express" class="select2 form-select form-select-lg" data-allow-clear="true">
+                                @foreach($expresses as $express)
+                                <option value="{{ $express->ExpressNameEn.','.$express->ExpressNameMm }}">{{ $express->ExpressNameEn.' - '.$express->ExpressNameMm  }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="edit-station" class="form-label">Station <span class="fw-bolder text-danger" >*</span></label>
+                                <select id="edit-station" class="select2 form-select form-select-lg" data-allow-clear="true">
+                                @foreach($stations as $station)
+                                <option value="{{ $station->StationNameEn.','.$station->StationNameMm }}">{{ $station->StationNameEn }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col mb-3">
+                                <div class="row">
+                                        <div class="col-md-4">
+                                                <label for="edit-region" class="form-label">Region Code</label>
+                                                <select id="edit-region" class="select2 form-select form-select-lg" data-allow-clear="true">
+                                                @foreach($regions as $region)
+                                                <option value="{{ $region->RegionCode }}">{{ $region->RegionCode }}</option>
+                                                @endforeach
+                                                </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                                <label for="edit-type" class="form-label">Service Type</label>
+                                                <select id="edit-type" class="select2 form-select form-select-lg" data-allow-clear="true">
+                                                @foreach($types as $type)
+                                                <option value="{{ $type->ServiceTypeEn }}">{{ $type->ServiceTypeEn }}</option>
+                                                @endforeach
+                                                </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                                <label for="edit-sla" class="form-label">SLA (Hour)</label>
+                                                <input type="text" id="edit-sla" class="form-control" value="24" >
+                                        </div>
+                                </div>
                             </div>
                         </div>
                        
                         <div class="row g-2">
                             <div class="col mb-3">
-                                <label class="switch switch-primary">
-                                    <input type="checkbox" class="switch-input" id="edit-active" />
-                                    <span class="switch-toggle-slider">
-                                        <span class="switch-on">
-                                            <i class="bx bx-check"></i>
-                                        </span>
-                                        <span class="switch-off">
-                                            <i class="bx bx-x"></i>
-                                        </span>
-                                    </span>
-                                    <span class="switch-label">Active</span>
-                                </label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="switch switch-secondary">
+                                            <input type="checkbox" class="switch-input" id="edit-active" checked />
+                                            <span class="switch-toggle-slider">
+                                                <span class="switch-on">
+                                                    <i class="bx bx-check"></i>
+                                                </span>
+                                                <span class="switch-off">
+                                                    <i class="bx bx-x"></i>
+                                                </span>
+                                            </span>
+                                            <span class="switch-label">Active</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="switch switch-secondary">
+                                            <input type="checkbox" class="switch-input" id="edit-default" />
+                                            <span class="switch-toggle-slider">
+                                                <span class="switch-on">
+                                                    <i class="bx bx-check"></i>
+                                                </span>
+                                                <span class="switch-off">
+                                                    <i class="bx bx-x"></i>
+                                                </span>
+                                            </span>
+                                            <span class="switch-label">Default</span>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -356,11 +427,11 @@
                         <input type="hidden" id="edit-id" class="form-control">
                         <input type="hidden" id="edit-region-type" class="form-control">
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary btn-update">Save</button>
+                        <button type="button" class="btn btn-secondary btn-update">Save</button>
                     </div>
                 </form>
             </div>
-        </div>  
+        </div> 
  
   
     <!-- Core JS -->
@@ -421,7 +492,7 @@
                                                                 +'<button type="button" class="btn btn-icon btn-sm btn-outline-secondary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" cursorshover="true"><i class="bx bx-dots-vertical-rounded" cursorshover="true"></i></button>'
                                                                 +'<ul class="dropdown-menu dropdown-menu-end" style="">'
                                                                    +'<li><a class="dropdown-item text-success" href="'+url+'/admin/3pl-services/routes/'+item.Id+'" cursorshover="true" ><span class="tf-icons bx bx-search" cursorshover="true"></span> View Item</a></li>'
-                                                                    +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditExpress" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
+                                                                    +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditRoute" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
                                                                     +'<li><a class="dropdown-item text-muted  load-id disabled" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#DeleteExpress" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-trash" cursorshover="true"></span> Delete Item</a></li>'
                                                                 +'</ul>'
                                                              +'</div>'
@@ -537,21 +608,47 @@
 
                 $('body').delegate(".load-id","click",function () {
                         id = $(this).attr('title');
-                        $("#edit-enname").val('loading...');
-                        $("#edit-mmname").val('loading...');
-                        $("#edit-enname").prop('disabled',true);
-                        $("#edit-mmname").prop('disabled',true);
+
+                        $("#edit-id").val(id);
+                        
+                        $("#edit-from-branch").append('<option>loading...</option>');
+                        $("#edit-to-branch").val('loading...');
+                        // $("#edit-express").prop('disabled',true);
+                        // $("#edit-station").prop('disabled',true);
+                        // $("#edit-region").prop('disabled',true);
+                        // $("#edit-type").prop('disabled',true);
+                        // $("#edit-sla").prop('disabled',true);
+                        
+                        if($("#edit-active").prop('checked') == true){
+                            active = 1;
+                        }else{ 
+                            active = 0;
+                        }
+
+                        if($("#edit-default").prop('checked') == true){
+                            default_route = 1;
+                        }else{ 
+                            default_route = 0;
+                        }
+
+                        $('#NewRoute').modal('hide');
 
                         $.ajax({
-                                url: url+'/admin/3pl-services/fetched-express',
+                                url: url+'/admin/3pl-services/fetched-route',
                                 type: 'POST',
                                 data: {
                                         id:id,
                                         _token:token
                                 },
                                 success: function(data){
-                                        $("#edit-enname").val(data.ExpressNameEn);
-                                        $("#edit-mmname").val(data.ExpressNameMm);
+                                        $("#edit-from-branch").val(data.FromBranchName).change();
+                                        $("#edit-to-branch").val(data.ToBranchName).change();
+                                        $("#edit-express").val(data.ExpressNameEn+','+data.ExpressNameMm).change();
+                                        $("#edit-station").val(data.StationNameEn+','+data.StationNameMm).change();
+                                        $("#edit-region").val(data.StationRegionCode).change();
+                                        $("#edit-type").val(data.ServiceType).change();
+                                        $("#edit-sla").val(data.SLA);
+
                                         if(data.Active == 1){
                                                 $("#edit-active").prop('checked', true);
                                         }else{
@@ -614,6 +711,60 @@
                                                 $("#error-message").text(data.message);
                                                 $("#errorToast").toast("show");
                                         }
+                                }
+                        });
+                });
+
+                $('body').delegate(".btn-update","click",function () {
+                    var id = $("#edit-id").val();
+                        var from_branch = $("#edit-from-branch").val();
+                        var to_branch = $("#edit-to-branch").val();
+                        var express = $("#edit-express").val();
+                        var station = $("#edit-station").val();
+                        var region = $("#edit-region").val();
+                        var type = $("#edit-type").val();
+                        var sla = $("#edit-sla").val();
+                        if($("#edit-active").prop('checked') == true){
+                            active = 1;
+                        }else{ 
+                            active = 0;
+                        }
+
+                        if($("#edit-default").prop('checked') == true){
+                            default_route = 1;
+                        }else{ 
+                            default_route = 0;
+                        }
+
+                        $('#EditRoute').modal('hide');
+
+                        $.ajax({
+                                url: url+'/admin/3pl-services/updated-route',
+                                type: 'POST',
+                                data: {
+                                    id:id,
+                                    from_branch:from_branch,
+                                    to_branch:to_branch,
+                                    express:express,
+                                    station:station,
+                                    region:region,
+                                    type:type,
+                                    sla:sla,
+                                    default_route:default_route,
+                                    active:active,
+                                    _method:'PUT',
+                                    _token:token
+                                },
+                                success: function(data){
+                                    if(data.success == 1){
+                                        $("#success-message").text(data.message);
+                                        $("#successToast").toast("show");
+
+                                        fetched_data();   
+                                    }else{
+                                        $("#error-message").text(data.message);
+                                        $("#errorToast").toast("show");
+                                    }
                                 }
                         });
                 });

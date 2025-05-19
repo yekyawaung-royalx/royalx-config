@@ -112,6 +112,12 @@ class ThreePLController extends Controller
         return response()->json($express);
     }
 
+    public function fetched_route(Request $request){
+        $express = DB::table('ExpressesStations3PL')->where('Id',$request->id)->first();
+
+        return response()->json($express);
+    }
+
     public function updated_express(Request $request){
         $response = array();
 
@@ -167,6 +173,37 @@ class ThreePLController extends Controller
         return response()->json($response);
     }
 
+    public function updated_route(Request $request){
+        $express = explode(",",$request->express);
+        $station = explode(",",$request->station);
+
+        $route = DB::table('ExpressesStations3PL')->where('Id',$request->id)->first();
+
+        if($route){
+            DB::table('ExpressesStations3PL')->where('Id',$request->id)->update([
+                'FromBranchName' => $request->from_branch,
+                'ToBranchName' => $request->to_branch,
+                'ExpressNameMm' => $express[1],
+                'ExpressNameEn' => $express[0],
+                'StationNameMm' => $station[1],
+                'StationNameEn' => $station[0],
+                'StationRegionCode' => $request->region,
+                'ServiceType' => $request->type,
+                'Default' => $request->default_route,
+                'SLA' => $request->sla,
+                'Active' => $request->active,
+                'UpdatedAt'         => date('Y-m-d H:i:s'),
+            ]);
+
+            $response['success'] = 1;
+            $response['message'] = 'Route has been updated.';
+        }else{
+            $response['success'] = 0;
+            $response['message'] = 'Route is not exists.';
+        }
+
+        return response()->json($response);
+    }
     
     public function change_route(Request $request){
         $route = DB::table('ExpressesStations3PL')->where('Id',$request->Id)->first();
