@@ -41,7 +41,6 @@ class ThreePLController extends Controller
 
     public function related_branches(){
         $json = 'json/3pl-services/related-branches';
-
         return view('backend.3pl.related-branches',compact('json'));
     }
 
@@ -180,6 +179,14 @@ class ThreePLController extends Controller
         $route = DB::table('ExpressesStations3PL')->where('Id',$request->id)->first();
 
         if($route){
+            if($request->default_route == 1){
+                //remove default route (from branch, to branch)
+                DB::table('ExpressesStations3PL')->where('FromBranchName',$request->from_branch)->where('ToBranchName',$request->from_branch)
+                ->update([
+                    'Default' => 0,
+                ]);
+            }
+            
             DB::table('ExpressesStations3PL')->where('Id',$request->id)->update([
                 'FromBranchName' => $request->from_branch,
                 'ToBranchName' => $request->to_branch,

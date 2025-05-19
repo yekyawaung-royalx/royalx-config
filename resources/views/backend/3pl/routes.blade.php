@@ -564,7 +564,7 @@
                                                                 +'<button type="button" class="btn btn-icon btn-sm btn-outline-secondary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false" cursorshover="true"><i class="bx bx-dots-vertical-rounded" cursorshover="true"></i></button>'
                                                                 +'<ul class="dropdown-menu dropdown-menu-end" style="">'
                                                                    +'<li><a class="dropdown-item text-success" href="'+url+'/admin/3pl-services/routes/'+item.Id+'" cursorshover="true" ><span class="tf-icons bx bx-search" cursorshover="true"></span> View Item</a></li>'
-                                                                    +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditExpress" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
+                                                                    +'<li><a class="dropdown-item text-primary  load-id" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#EditRoute" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-pencil" cursorshover="true"></span> Edit Item</a></li>'
                                                                     +'<li><a class="dropdown-item text-muted  load-id disabled" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#DeleteExpress" cursorshover="true" title= '+item.Id+'><span class="tf-icons bx bx-trash" cursorshover="true"></span> Delete Item</a></li>'
                                                                 +'</ul>'
                                                              +'</div>'
@@ -653,6 +653,12 @@
                                                 $("#edit-active").prop('checked', true);
                                         }else{
                                                 $("#edit-active").prop('checked', false);
+                                        }
+
+                                        if(data.Default == 1){
+                                                $("#edit-default").prop('checked', true);
+                                        }else{
+                                                $("#edit-default").prop('checked', false);
                                         }
 
                                         $("#item").val(data.Id);
