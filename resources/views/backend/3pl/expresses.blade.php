@@ -77,6 +77,9 @@
                                                         </div>
                                                         <div class="col-md-8">
                                                                 <div class="pull-right">
+                                                                        <button type="button" class="btn btn-secondary btn-new  v-top" data-bs-toggle="modal" data-bs-target="#AddExpress" cursorshover="true">
+                                                                                <span class="tf-icons bx bx-plus" cursorshover="true"></span> Add New
+                                                                        </button>
                                                                         <div class="btn-group v-top" role="group" aria-label="Basic example">
                                                                                 <button type="button" class="btn btn-secondary pagination-btn" id="prev-btn" cursorshover="true"><i class="tf-icon bx bx-chevrons-left"></i></button>
                                                                                 <button type="button" class="btn btn-outline-secondary current-page" data-bs-toggle="modal" data-bs-target="#modalTop">0</button>
@@ -184,6 +187,53 @@
                 <span id="error-message"></span>
             </div>
         </div>
+
+        <!-- Add Modal -->
+        <div class="modal modal-top fade" id="AddExpress" tabindex="-1">
+            <div class="modal-dialog">
+                <form class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTopTitle">Add Express</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="mmname" class="form-label">Express EN Name</label>
+                                <input type="text" id="enname" class="form-control" placeholder="Ah Thwin Thit" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="enname" class="form-label">Express MM Name</label>
+                                <input type="text" id="mmname" class="form-control" placeholder="အသွင်သစ်" >
+                            </div>
+                        </div>
+                       
+                        <div class="row g-2">
+                            <div class="col mb-3">
+                                <label class="switch switch-secondary">
+                                    <input type="checkbox" class="switch-input" id="active" checked />
+                                    <span class="switch-toggle-slider">
+                                        <span class="switch-on">
+                                            <i class="bx bx-check"></i>
+                                        </span>
+                                        <span class="switch-off">
+                                            <i class="bx bx-x"></i>
+                                        </span>
+                                    </span>
+                                    <span class="switch-label">Active</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary btn-save">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div> 
 
         <!-- Edit Modal -->
         <div class="modal modal-top fade" id="EditExpress" tabindex="-1">
@@ -329,7 +379,6 @@
                         });
                 };
 
-
                 $('body').delegate(".pagination-btn","click",function () {
                         //clicked url json data
                         $(".loading").removeClass('hide');
@@ -426,6 +475,44 @@
 
                                         $("#edit-enname").prop('disabled',false);
                                         $("#edit-mmname").prop('disabled',false);
+                                }
+                        });
+                });
+
+                $('body').delegate(".btn-save","click",function () {
+                        var en_name = $("#enname").val();
+                        var mm_name = $("#mmname").val();
+                        var id = $("#item").val();
+                        if($("#active").prop('checked') == true){
+                            active = 1;
+                        }else{ 
+                            active = 0;
+                        }
+
+                        $('#AddExpress').modal('hide');
+
+                        $.ajax({
+                                url: url+'/admin/3pl-services/saved-express',
+                                type: 'POST',
+                                data: {
+                                        id:id,
+                                        en_name:en_name,
+                                        mm_name:mm_name,
+                                        active:active,
+                                        _method:'POST',
+                                        _token:token
+                                },
+                                success: function(data){
+                                        if(data.success == 1){
+                                                $("#success-message").text(data.message);
+                                                $("#successToast").toast("show");
+                                                $("#enname").val('');
+                                                $("#mmname").val('');
+                                                fetched_data();   
+                                        }else{
+                                                $("#error-message").text(data.message);
+                                                $("#errorToast").toast("show");
+                                        }
                                 }
                         });
                 });

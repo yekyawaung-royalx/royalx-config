@@ -315,5 +315,29 @@ class ThreePLController extends Controller
 
         return response()->json($response);        
     }
+
+    public function saved_express(Request $request){
+        $express = DB::table('Expresses3PL')->where('ExpressNameEn',$request->en_name)
+            ->where('ExpressNameMm',$request->mm_name)
+            ->first();
+
+        if(!$express){
+            DB::table('Expresses3PL')->insert([
+                'ExpressNameEn' => $request->en_name,
+                'ExpressNameMm' => $request->mm_name,
+                'Active' => $request->active,
+                'CreatedAt'         => date('Y-m-d H:i:s'),
+                'UpdatedAt'         => date('Y-m-d H:i:s'),
+            ]);
+
+            $response['success'] = 1;
+            $response['message'] = 'Express has been created.';
+        }else{
+            $response['success'] = 0;
+            $response['message'] = 'Express is already exists.';
+        }
+
+        return response()->json($response);        
+    }
     
 }
