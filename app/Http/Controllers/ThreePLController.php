@@ -41,7 +41,9 @@ class ThreePLController extends Controller
 
     public function related_branches(){
         $json = 'json/3pl-services/related-branches';
-        return view('backend.3pl.related-branches',compact('json'));
+        $branches = DB::table('Branches')->orderBy('BranchNameEn','asc')->get();
+
+        return view('backend.3pl.related-branches',compact('json','branches'));
     }
 
     public function routes(){
@@ -335,6 +337,36 @@ class ThreePLController extends Controller
         }else{
             $response['success'] = 0;
             $response['message'] = 'Express is already exists.';
+        }
+
+        return response()->json($response);        
+    }
+
+    
+    public function saved_related_branch(Request $request){
+        $parent = explode(",", $request->parent);
+        $child = explode(",", $request->child);
+
+        $branch = DB::table('RelatedBranches3PL')->where('BranchNameEn',$parent[0])
+            ->where('RelatedBranchNameEn',$child[0])
+            ->first();
+
+        if(!$branch){
+            DB::table('RelatedBranches3PL')->insert([
+                'BranchNameEn' => $parent[0],
+                'BranchNameMm' => $parent[1],
+                'RelatedBranchNameEn' => $child[0],
+                'RelatedBranchNameMm' => $child[1],
+                'Active' => $request->active,
+                'CreatedAt'         => date('Y-m-d H:i:s'),
+                'UpdatedAt'         => date('Y-m-d H:i:s'),
+            ]);
+
+            $response['success'] = 1;
+            $response['message'] = 'Branch has been created.';
+        }else{
+            $response['success'] = 0;
+            $response['message'] = 'Branch is already exists.';
         }
 
         return response()->json($response);        

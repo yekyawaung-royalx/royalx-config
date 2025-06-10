@@ -77,7 +77,7 @@
                                                         </div>
                                                         <div class="col-md-8">
                                                                 <div class="pull-right">
-                                                                        <button type="button" class="btn btn-secondary btn-new  v-top" data-bs-toggle="modal" data-bs-target="#AddNewTownship" cursorshover="true">
+                                                                        <button type="button" class="btn btn-secondary btn-new  v-top" data-bs-toggle="modal" data-bs-target="#AddNewBranch" cursorshover="true">
                                                                                 <span class="tf-icons bx bx-plus" cursorshover="true"></span> Add New
                                                                         </button>
                                                                         <div class="btn-group v-top" role="group" aria-label="Basic example">
@@ -190,32 +190,40 @@
             </div>
         </div>
 
-        <!-- Edit Modal -->
-        <div class="modal modal-top fade" id="EditExpress" tabindex="-1">
+        <!-- New Modal -->
+        <div class="modal modal-top fade" id="AddNewBranch" tabindex="-1">
             <div class="modal-dialog">
                 <form class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalTopTitle">Edit Express</h5>
+                        <h5 class="modal-title" id="modalTopTitle">New Related Branch</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="edit-mmname" class="form-label">Express EN Name</label>
-                                <input type="text" id="edit-enname" class="form-control" value="loading ..." disabled>
+                                <label for="parent-branch" class="form-label">Main Branch Name</label>
+                                <select id="parent-branch" class="select2 form-select form-select-lg" data-allow-clear="true">
+                                @foreach($branches as $parent)
+                                <option value="{{ $parent->BranchNameEn.','.$parent->BranchNameMm }}">{{ $parent->BranchNameEn.' - '.$parent->BranchNameMm  }} ({{ $parent->RegionCode }})</option>
+                                @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="edit-enname" class="form-label">Express MM Name</label>
-                                <input type="text" id="edit-mmname" class="form-control" value="loading ..." disabled>
+                                <label for="child-branch" class="form-label">Related Branch Name</label>
+                                <select id="child-branch" class="select2 form-select form-select-lg" data-allow-clear="true">
+                                @foreach($branches as $child)
+                                <option value="{{ $child->BranchNameEn.','.$child->BranchNameMm }}">{{ $child->BranchNameEn.' - '.$child->BranchNameMm  }} ({{ $child->RegionCode }})</option>
+                                @endforeach
+                                </select>
                             </div>
                         </div>
                        
                         <div class="row g-2">
                             <div class="col mb-3">
-                                <label class="switch switch-primary">
-                                    <input type="checkbox" class="switch-input" id="edit-active" />
+                                <label class="switch switch-secondary">
+                                    <input type="checkbox" class="switch-input" id="active" checked />
                                     <span class="switch-toggle-slider">
                                         <span class="switch-on">
                                             <i class="bx bx-check"></i>
@@ -233,7 +241,7 @@
                         <input type="hidden" id="edit-id" class="form-control">
                         <input type="hidden" id="edit-region-type" class="form-control">
                         <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary btn-update">Save</button>
+                        <button type="button" class="btn btn-secondary btn-save">Save</button>
                     </div>
                 </form>
             </div>
@@ -437,27 +445,26 @@
                         });
                 });
 
-                $('body').delegate(".btn-update","click",function () {
-                        var en_name = $("#edit-enname").val();
-                        var mm_name = $("#edit-mmname").val();
+                $('body').delegate(".btn-save","click",function () {
+                        var parent = $("#parent-branch").val();
+                        var child = $("#child-branch").val();
                         var id = $("#item").val();
-                        if($("#edit-active").prop('checked') == true){
+                        if($("#active").prop('checked') == true){
                             active = 1;
                         }else{ 
                             active = 0;
                         }
 
-                        $('#EditExpress').modal('hide');
+                        $('#AddNewBranch').modal('hide');
 
                         $.ajax({
-                                url: url+'/admin/3pl-services/updated-express',
+                                url: url+'/admin/3pl-services/saved-related-branch',
                                 type: 'POST',
                                 data: {
-                                        id:id,
-                                        en_name:en_name,
-                                        mm_name:mm_name,
+                                        parent:parent,
+                                        child:child,
                                         active:active,
-                                        _method:'PUT',
+                                        _method:'POST',
                                         _token:token
                                 },
                                 success: function(data){

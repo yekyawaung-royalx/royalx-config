@@ -133,6 +133,7 @@ Route::prefix('admin')->group(function () {
     Route::post('3pl-services/saved-express',[App\Http\Controllers\ThreePLController::class, 'saved_express']);
     Route::post('3pl-services/fetched-route',[App\Http\Controllers\ThreePLController::class, 'fetched_route']);
     Route::put('3pl-services/updated-route',[App\Http\Controllers\ThreePLController::class, 'updated_route']);
+    Route::post('3pl-services/saved-related-branch',[App\Http\Controllers\ThreePLController::class, 'saved_related_branch']);
 });
 
 Route::prefix('json')->group(function () {
